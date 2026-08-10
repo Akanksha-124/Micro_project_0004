@@ -6,7 +6,7 @@
   --bg-sidebar: radial-gradient(circle at 10% 30%, #2b043d 0%, #150221 60%, #090112 100%);
   --bg-main: #dcdcdc;
   
-  /* Multi-color Gradient Mesh for Front Card matching Figma exactly */
+  /* Multi-color Gradient Mesh for Front Card matching Figma */
   --front-card-bg: 
     radial-gradient(circle at 92% 10%, #e05d43 0%, transparent 48%),
     radial-gradient(circle at 55% 90%, #2575d0 0%, transparent 45%),
@@ -30,8 +30,8 @@
   --radius-input: 8px;
   --radius-card: 16px;
   
-  --shadow-card-front: 0 35px 70px rgba(0, 0, 0, 0.5);
-  --shadow-card-back: 0 25px 50px rgba(0, 0, 0, 0.3);
+  --shadow-card-front: 0 25px 50px rgba(0, 0, 0, 0.4);
+  --shadow-card-back: 0 20px 40px rgba(0, 0, 0, 0.25);
 }
 
 * {
@@ -70,20 +70,20 @@ body {
   z-index: 10;
 }
 
-/* Cards Wrapper - Spacing & Overlap */
+/* Cards Wrapper - Positioned with clear vertical gap between front & back cards */
 .cards-wrapper {
   position: relative;
-  width: 480px;
-  height: 520px;
-  margin-right: -160px; /* Extends front & back cards cleanly into the light gray area */
+  width: 490px;
+  height: 560px;
+  margin-right: -160px;
   display: flex;
   flex-direction: column;
 }
 
 /* Common Card Base */
 .credit-card {
-  width: 420px;
-  height: 245px;
+  width: 440px;
+  height: 240px;
   border-radius: var(--radius-card);
   position: absolute;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
@@ -91,16 +91,16 @@ body {
 }
 
 .credit-card:hover {
-  transform: translateY(-4px) scale(1.01);
+  transform: translateY(-4px);
 }
 
-/* Front Card Styling */
+/* Front Card Styling - Positioned Top */
 .credit-card-front {
-  top: 40px;
+  top: 15px;
   left: 0;
   z-index: 3;
   background: var(--front-card-bg);
-  padding: 30px 34px;
+  padding: 28px 32px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -131,12 +131,12 @@ body {
 }
 
 .card-number-display {
-  font-size: 1.65rem;
-  letter-spacing: 4.5px;
-  word-spacing: 10px;
+  font-size: 1.5rem;
+  letter-spacing: 3.5px;
+  word-spacing: 8px;
   font-weight: 500;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  margin-top: 24px;
+  margin-top: 20px;
   white-space: nowrap;
 }
 
@@ -144,27 +144,27 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   letter-spacing: 2.5px;
   text-transform: uppercase;
   font-weight: 500;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .cardholder-name {
-  max-width: 270px;
+  max-width: 280px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Back Card Styling */
+/* Back Card Styling - Positioned with a clear vertical gap below Front Card (No Overlap) */
 .credit-card-back {
-  top: 260px;
-  left: 100px;
+  top: 295px; /* Front Card bottom is at 255px; 40px distinct gap! */
+  left: 50px;
   z-index: 2;
   background: var(--back-card-bg);
-  padding-top: 26px;
+  padding-top: 24px;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-card-back);
@@ -173,7 +173,7 @@ body {
 
 .black-stripe {
   width: 100%;
-  height: 50px;
+  height: 48px;
   background-color: #282828;
   margin-bottom: 24px;
 }
@@ -183,7 +183,7 @@ body {
   margin: 0 auto;
   background: #9ea4b0;
   border-radius: 4px;
-  height: 40px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -220,7 +220,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 60px 40px 60px 180px; /* Space allowance for the overlapping back card */
+  padding: 60px 40px 60px 180px;
   background-color: var(--bg-main);
 }
 
@@ -406,20 +406,20 @@ input.input-error {
   .hero-section {
     width: 100%;
     min-width: auto;
-    height: 280px;
+    height: 320px;
     padding: 20px;
     justify-content: center;
   }
   
   .cards-wrapper {
-    height: 260px;
+    height: 280px;
     width: 100%;
     max-width: 360px;
     margin-right: 0;
   }
   
   .credit-card {
-    width: 300px;
+    width: 310px;
     height: 175px;
     padding: 20px 24px;
   }
@@ -430,13 +430,13 @@ input.input-error {
   }
   
   .credit-card-back {
-    top: 75px;
-    left: 50px;
+    top: 110px;
+    left: 40px;
   }
   
   .card-number-display {
-    font-size: 1.2rem;
-    letter-spacing: 3px;
+    font-size: 1.15rem;
+    letter-spacing: 2.5px;
     word-spacing: 6px;
     margin-top: 12px;
   }
