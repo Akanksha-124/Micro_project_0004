@@ -3,26 +3,30 @@
 :root {
   --font-family: 'Space Grotesk', sans-serif;
   
-  --bg-dark-primary: #12002b;
-  --bg-dark-secondary: #27063d;
-  --card-gradient: linear-gradient(135deg, #4f1577 0%, #a438b0 50%, #ee5c88 100%);
-  --card-back-bg: linear-gradient(135deg, #e3e4e8 0%, #cbd0d8 100%);
+  --bg-hero: radial-gradient(circle at 10% 20%, #2f0743 0%, #150221 60%, #0c0114 100%);
+  --bg-main: #d9d9d9;
   
-  --primary-purple: #210925;
-  --primary-purple-hover: #3b1742;
-  --input-border: #dfdee0;
-  --input-focus: #63480a;
+  /* Exact Figma Front Card Gradient: Violet -> Magenta -> Warm Orange Accent */
+  --front-card-gradient: linear-gradient(135deg, #3d1b7a 0%, #762294 45%, #b8348d 75%, #e8635c 100%);
+  --back-card-bg: linear-gradient(135deg, #d8dade 0%, #c4c7d0 100%);
+  
+  --primary-button-bg: #14051a;
+  --primary-button-hover: #290b33;
+  --input-bg: #d0d0d5;
+  --input-border: #b8b8be;
+  --input-focus-border: #600595;
   --error-color: #ff5252;
-  --text-dark: #210925;
-  --text-muted: #8f8694;
-  --text-light: #ffffff;
   
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --text-label: #2d2335;
+  --text-placeholder: #8e8894;
+  --text-input: #14051a;
+  --text-white: #ffffff;
   
-  --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.35);
-  --shadow-input: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --radius-input: 8px;
+  --radius-card: 14px;
+  
+  --shadow-card-front: 0 30px 60px rgba(0, 0, 0, 0.45);
+  --shadow-card-back: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -33,8 +37,8 @@
 
 body {
   font-family: var(--font-family);
-  background-color: #f2f3f7;
-  color: var(--text-dark);
+  background-color: var(--bg-main);
+  color: var(--text-label);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -45,87 +49,64 @@ body {
   display: flex;
   min-height: 100vh;
   width: 100%;
+  background-color: var(--bg-main);
 }
 
 /* Sidebar / Hero Section with Credit Cards */
 .hero-section {
-  width: 35%;
-  min-width: 360px;
-  background: radial-gradient(circle at 20% 30%, #4a0d66 0%, #1e052d 50%, #0d0114 100%);
+  width: 38%;
+  min-width: 380px;
+  background: var(--bg-hero);
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  padding: 40px;
-}
-
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  background: radial-gradient(circle at 70% 20%, rgba(164, 56, 176, 0.25) 0%, transparent 60%),
-              radial-gradient(circle at 30% 80%, rgba(238, 92, 136, 0.2) 0%, transparent 50%);
-  pointer-events: none;
+  padding: 40px 0 40px 40px;
+  z-index: 10;
 }
 
 .cards-wrapper {
   position: relative;
-  width: 100%;
-  max-width: 440px;
+  width: 460px;
   height: 480px;
+  margin-right: -120px; /* Crucial: Allows back card to overlap smoothly into the right section like Figma */
   display: flex;
   flex-direction: column;
 }
 
 /* Credit Card Common Styles */
 .credit-card {
-  width: 360px;
-  height: 220px;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card);
+  width: 380px;
+  height: 225px;
+  border-radius: var(--radius-card);
   position: absolute;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   user-select: none;
 }
 
 .credit-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45);
+  transform: translateY(-4px);
 }
 
 /* Front Card */
 .credit-card-front {
-  top: 40px;
+  top: 30px;
   left: 0;
-  z-index: 2;
-  background: var(--card-gradient);
-  padding: 28px;
+  z-index: 3;
+  background: var(--front-card-gradient);
+  padding: 28px 32px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: var(--text-light);
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.credit-card-front::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(125deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 60%);
-  pointer-events: none;
+  color: var(--text-white);
+  box-shadow: var(--shadow-card-front);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .card-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .logo-circle-large {
@@ -138,17 +119,17 @@ body {
 .logo-circle-small {
   width: 20px;
   height: 20px;
-  border: 1.5px solid #ffffff;
+  border: 1.8px solid #ffffff;
   border-radius: 50%;
 }
 
 .card-number-display {
-  font-size: 1.45rem;
-  letter-spacing: 3.5px;
+  font-size: 1.55rem;
+  letter-spacing: 4px;
   font-weight: 500;
-  word-spacing: 6px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  margin-top: 15px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  margin-top: 20px;
+  white-space: nowrap;
 }
 
 .card-details-row {
@@ -156,14 +137,13 @@ body {
   justify-content: space-between;
   align-items: flex-end;
   font-size: 0.85rem;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   font-weight: 500;
-  opacity: 0.95;
 }
 
 .cardholder-name {
-  max-width: 240px;
+  max-width: 250px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -171,27 +151,28 @@ body {
 
 /* Back Card */
 .credit-card-back {
-  top: 240px;
-  left: 80px;
-  z-index: 1;
-  background: var(--card-back-bg);
+  top: 230px;
+  left: 90px;
+  z-index: 2;
+  background: var(--back-card-bg);
   padding-top: 24px;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: var(--shadow-card-back);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .black-stripe {
   width: 100%;
-  height: 46px;
-  background-color: #2f2f2f;
-  margin-bottom: 20px;
+  height: 48px;
+  background-color: #2b2b2b;
+  margin-bottom: 24px;
 }
 
 .cvc-strip {
   width: 82%;
   margin: 0 auto;
-  background: #b4b9c1;
+  background: #a9aeb7;
   border-radius: 4px;
   height: 38px;
   display: flex;
@@ -201,7 +182,7 @@ body {
 }
 
 .cvc-display {
-  color: #210925;
+  color: #2d2d2d;
   font-size: 0.95rem;
   letter-spacing: 2px;
   font-weight: 600;
@@ -216,9 +197,9 @@ body {
 }
 
 .back-line {
-  height: 5px;
-  background-color: #abb0b9;
-  border-radius: 3px;
+  height: 4px;
+  background-color: #9ba0aa;
+  border-radius: 2px;
 }
 .back-line-1 { width: 140px; }
 .back-line-2 { width: 100px; }
@@ -230,25 +211,25 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
-  background-color: #f2f3f7;
+  padding: 60px 40px 60px 140px; /* Offset left padding to compensate for back card overlap */
+  background-color: var(--bg-main);
 }
 
 .form-container {
   width: 100%;
-  max-width: 400px;
-  animation: fadeIn 0.5s ease-in-out;
+  max-width: 380px;
+  animation: fadeIn 0.4s ease-out;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .card-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 22px;
 }
 
 .form-group {
@@ -272,121 +253,113 @@ body {
 }
 
 label {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--text-dark);
+  color: var(--text-label);
 }
 
 input {
   width: 100%;
   padding: 13px 16px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-input);
   border: 1.5px solid var(--input-border);
   font-family: var(--font-family);
-  font-size: 1.05rem;
-  color: var(--text-dark);
+  font-size: 1rem;
+  color: var(--text-input);
   outline: none;
-  background-color: #ffffff;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: var(--input-bg);
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 input::placeholder {
-  color: #c7c6cb;
+  color: var(--text-placeholder);
 }
 
 input:focus {
-  border-color: #63480a;
-  box-shadow: 0 0 0 2px rgba(100, 30, 130, 0.2);
+  background-color: #ffffff;
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 0 3px rgba(96, 5, 149, 0.15);
 }
 
 input.input-error {
   border-color: var(--error-color) !important;
+  background-color: #fff5f5;
 }
 
 .error-message {
   font-size: 0.75rem;
   color: var(--error-color);
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 2px;
-  animation: shake 0.2s ease-in-out;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
 }
 
 .btn-confirm {
   width: 100%;
   padding: 16px;
-  background-color: var(--primary-purple);
-  color: var(--text-light);
+  background-color: var(--primary-button-bg);
+  color: var(--text-white);
   font-family: var(--font-family);
   font-size: 1.05rem;
   font-weight: 500;
-  letter-spacing: 1px;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-input);
   cursor: pointer;
   margin-top: 8px;
-  transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 12px rgba(33, 9, 37, 0.25);
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .btn-confirm:hover {
-  background-color: var(--primary-purple-hover);
-  box-shadow: 0 6px 16px rgba(33, 9, 37, 0.35);
+  background-color: var(--primary-button-hover);
 }
 
 .btn-confirm:active {
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
-/* Success State Screen */
+/* Success State */
 .success-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 24px;
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.4s ease-out;
 }
 
 .success-icon-wrapper {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #63480a 0%, #210925 100%);
+  background: var(--primary-button-bg);
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 10px 24px rgba(33, 9, 37, 0.3);
+  box-shadow: 0 10px 24px rgba(20, 5, 26, 0.25);
 }
 
 .check-icon {
   width: 36px;
   height: 36px;
-  color: #ffffff;
+  color: var(--text-white);
 }
 
 .success-title {
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   letter-spacing: 3px;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var(--text-label);
 }
 
 .success-subtitle {
-  font-size: 1.05rem;
-  color: var(--text-muted);
+  font-size: 1rem;
+  color: var(--text-placeholder);
   font-weight: 500;
   margin-top: -12px;
 }
 
-/* Success Toast Notification */
+/* Success Toast */
 .toast-notification {
   position: fixed;
   top: 24px;
@@ -394,13 +367,13 @@ input.input-error {
   background: #ffffff;
   border-left: 5px solid #28a745;
   padding: 16px 24px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-input);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   gap: 12px;
   z-index: 100;
-  animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: slideInRight 0.4s ease;
 }
 
 @keyframes slideInRight {
@@ -410,12 +383,12 @@ input.input-error {
 
 .toast-text {
   font-weight: 600;
-  color: var(--text-dark);
+  color: var(--text-label);
   font-size: 0.95rem;
 }
 
 /* Responsive Styles */
-@media (max-width: 950px) {
+@media (max-width: 980px) {
   .app-container {
     flex-direction: column;
   }
@@ -423,20 +396,22 @@ input.input-error {
   .hero-section {
     width: 100%;
     min-width: auto;
-    height: 280px;
+    height: 260px;
     padding: 20px;
+    justify-content: center;
   }
   
   .cards-wrapper {
     height: 240px;
     width: 100%;
-    max-width: 360px;
+    max-width: 340px;
+    margin-right: 0;
   }
   
   .credit-card {
-    width: 290px;
-    height: 170px;
-    padding: 20px;
+    width: 280px;
+    height: 165px;
+    padding: 20px 22px;
   }
   
   .credit-card-front {
@@ -445,30 +420,32 @@ input.input-error {
   }
   
   .credit-card-back {
-    top: 60px;
-    left: 50px;
+    top: 65px;
+    left: 45px;
   }
   
   .card-number-display {
-    font-size: 1.1rem;
-    letter-spacing: 2px;
+    font-size: 1.15rem;
+    letter-spacing: 2.5px;
+    margin-top: 10px;
   }
   
   .card-details-row {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
   }
   
   .logo-circle-large {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
   }
   
   .logo-circle-small {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
   }
   
   .form-section {
-    padding: 90px 20px 40px;
+    padding: 80px 20px 40px;
   }
 }
