@@ -29,7 +29,11 @@ function App() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === 'number') {
+    if (name === 'name') {
+      // Alphabets and spaces only constraint for cardholder name
+      const alphabeticVal = value.replace(/[^a-zA-Z\s]/g, '');
+      setCardData((prev) => ({ ...prev, name: alphabeticVal }));
+    } else if (name === 'number') {
       const formatted = formatCardNumber(value);
       setCardData((prev) => ({ ...prev, number: formatted }));
     } else if (name === 'expMonth' || name === 'expYear' || name === 'cvc') {
@@ -53,6 +57,8 @@ function App() {
     // 1. Name validation
     if (!cardData.name.trim()) {
       newErrors.name = "Can't be blank";
+    } else if (!/^[a-zA-Z\s]+$/.test(cardData.name)) {
+      newErrors.name = 'Wrong format, letters only';
     }
 
     // 2. Card number validation
